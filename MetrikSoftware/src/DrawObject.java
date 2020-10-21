@@ -9,6 +9,7 @@ public class DrawObject extends Canvas implements MouseListener{
 	private int _sizeX = 0;
 	private int _sizeY = 0;
 	private int _counter;
+	private String text = "Koordinaten";
 	
 	
 	
@@ -51,6 +52,12 @@ public class DrawObject extends Canvas implements MouseListener{
 		g2d.draw(ellipse2D);
 //		rec.draw(rectangle2D);
 		
+		if(_y < 20) {
+			g2d.drawString(text, _x-20, _y+65);
+		} else {
+			g2d.drawString(text, _x-20, _y-10);
+		}
+		
 		//nach zwei Formen Canvas leeren
 		if(_counter > 1) {
 			g2d.clearRect(0, 0, _sizeX, _sizeY);
@@ -65,6 +72,7 @@ public class DrawObject extends Canvas implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		_x = (float) e.getX();
 		_y = (float) e.getY();
+		text = "Koordinaten: x: "+_x+" y: "+_y;
 		
 		//male etwas
 		paint(getGraphics());
