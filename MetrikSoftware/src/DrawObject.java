@@ -21,7 +21,14 @@ public class DrawObject extends Canvas implements MouseListener{
 		
 		setSize(_sizeX, _sizeY);
 		
-		setBackground(Color.pink);
+		if (color == 1)
+			setBackground(Color.red);
+		else if (color == 2)
+			setBackground(Color.green);
+		else if (color == 3)
+			setBackground(Color.blue);
+		else if (color < 1 || color > 3)
+			setBackground(Color.pink);
 		
 		addMouseListener(this);
 	}
@@ -41,8 +48,8 @@ public class DrawObject extends Canvas implements MouseListener{
 		Ellipse2D ellipse2D = new Ellipse2D.Float(_x, _y, 50, 50);
 		Rectangle2D rectangle2D = new Rectangle2D.Float(_x, _y, 50, 50);
 		
-//		g2d.draw(ellipse2D);
-		rec.draw(rectangle2D);
+		g2d.draw(ellipse2D);
+//		rec.draw(rectangle2D);
 		
 		//nach zwei Formen Canvas leeren
 		if(_counter > 1) {
