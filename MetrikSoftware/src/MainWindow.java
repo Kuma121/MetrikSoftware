@@ -1,4 +1,9 @@
 import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.FlowLayout;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.TextField;
 
 import javax.swing.*;
 
@@ -12,6 +17,9 @@ public class MainWindow extends JFrame{
 	private JMenuItem gruen;
 	private JMenuItem blau;
 	private JMenuItem closeItem;
+	private Label statusLabel;
+	private Panel controlPanel;
+	private static String objektGroeﬂe;
 	
 	public MainWindow(int windowSizeX, int windowSizeY, int color) {
 		this._x = windowSizeX;
@@ -22,6 +30,8 @@ public class MainWindow extends JFrame{
 		setTitle("Programm f¸r Softwaretechnik");	
 		setSize(_x, _y);
 		
+		
+		//MenuBar anlegen und mit Aktionen fuellen
 		menuBar = new JMenuBar();
 		 
         fileMenu = new JMenu("Hintergrund");
@@ -39,10 +49,42 @@ public class MainWindow extends JFrame{
 
         menuBar.add(fileMenu);
         
+        //Dialogfeld fuer Durchmesser anlegen
+        setLayout(new FlowLayout());
+		
+		statusLabel = new Label();
+		statusLabel.setAlignment(Label.CENTER);
+		statusLabel.setSize(600,100);
+		 
+		controlPanel = new Panel();
+		controlPanel.setLayout(new FlowLayout());
+		
+		add(controlPanel);
+		
+		Label frage = new Label("Wie Groﬂ soll der Kreis werden?: ", Label.CENTER);
+		final TextField antwortText = new TextField(6);
+		Button antwortButton = new Button("senden");
+		
+		antwortButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				String data = antwortText.getText();
+				statusLabel.setText(data);
+				objektGroeﬂe = statusLabel.getText();
+			 }
+		});
+		
+		controlPanel.add(frage);
+		controlPanel.add(antwortText);
+		controlPanel.add(antwortButton);
+        
+		//Position der MenuBar
         this.add(menuBar, BorderLayout.NORTH);
 		
-		add(new DrawObject(_x/*-100*/, _y/*-100*/, _color));	//Canvas Groessenanpassung wegen Menubar
+        //Canvas Groessenanpassung wegen Menubar
+		add(new DrawObject(_x/*-100*/, _y/*-100*/, _color));	
 		
+		
+		//ActionListener fuer die Menubar hinzufuegen
 		rot.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 _color = 1;
@@ -86,6 +128,14 @@ public class MainWindow extends JFrame{
 	
 	public int getY() {
 		return _y;
+	}
+	
+	public static String getObjektGroeﬂe() {
+		if (objektGroeﬂe == null) {
+			return objektGroeﬂe = "50";
+		}else {
+			return objektGroeﬂe;
+		}	
 	}
 	
 	public void openWindow() {

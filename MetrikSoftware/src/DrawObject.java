@@ -10,18 +10,21 @@ public class DrawObject extends Canvas implements MouseListener{
 	private int _sizeY = 0;
 	private int _counter;
 	private String text = "Koordinaten";
+	private String diameter;
 	
 	
 	
 	public DrawObject(int sizeX, int sizeY, int color) {
 		this._sizeX = sizeX;
 		this._sizeY = sizeY;
+		this.diameter = MainWindow.getObjektGroeﬂe();
 		
 		_x = _y = (float) 0;
 		_counter = 0;
 		
 		setSize(_sizeX, _sizeY);
 		
+		//Hintergrundauswahl
 		if (color == 1)
 			setBackground(Color.red);
 		else if (color == 2)
@@ -39,6 +42,10 @@ public class DrawObject extends Canvas implements MouseListener{
 		
 		if(_x == 0 && _y == 0) return;
 		
+		//Diameter festlegen
+		diameter = MainWindow.getObjektGroeﬂe();
+		float diameter1 = Float.parseFloat(diameter);
+		
 		//grafisches Objekt anlegen mit Strichstaerke
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setStroke(new BasicStroke(3.0F));
@@ -46,12 +53,13 @@ public class DrawObject extends Canvas implements MouseListener{
 		Graphics2D rec = (Graphics2D) g;
 		rec.setStroke(new BasicStroke(3.0F));
 		
-		Ellipse2D ellipse2D = new Ellipse2D.Float(_x, _y, 50, 50);
-		Rectangle2D rectangle2D = new Rectangle2D.Float(_x, _y, 50, 50);
+		Ellipse2D ellipse2D = new Ellipse2D.Float(_x, _y, diameter1, diameter1);
+		Rectangle2D rectangle2D = new Rectangle2D.Float(_x, _y, diameter1, diameter1);
 		
 		g2d.draw(ellipse2D);
 //		rec.draw(rectangle2D);
 		
+		//Koordinatenposition
 		if(_y < 20) {
 			g2d.drawString(text, _x-20, _y+65);
 		} else {
