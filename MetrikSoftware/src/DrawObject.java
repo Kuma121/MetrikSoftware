@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class DrawObject extends Canvas implements MouseListener{
@@ -18,6 +19,12 @@ public class DrawObject extends Canvas implements MouseListener{
 	private int liney2 = -1;
 	
 	private String diameter;
+	private String entfernung = "Entfernung:";
+	private double _coordx1 =-1;
+	private double _coordy1 =-1;
+	private double _coordx2 =-1;
+	private double _coordy2 =-1;
+
 	
 	
 	
@@ -65,16 +72,23 @@ public class DrawObject extends Canvas implements MouseListener{
 		
 		g2d.draw(ellipse2D);
 //		rec.draw(rectangle2D);
-		
-		
+				
 		//Linienzeichnung auf Mittelpunkt setzen nach zweitem gemalten Objekt
+		//Koordinaten bei 1. und 2. Klick speichern + Distanzberech
 		if (_counter == 0) {
 			linex1 = linex;
+			_coordx1 = _x;
 			liney1 = liney;
+			_coordy1 = _y;
 		}
 		else if (_counter == 1) {
 			linex2 = linex;
+			_coordx2 = _x;
 			liney2 = liney;
+			_coordy2 = _y;
+			entfernung = "Entfernung: "+calculateDistanceBetweenPointsWithPoint2D(_coordx1, _coordy1, _coordx2, _coordy2);
+			g2d.drawString(entfernung, 10, 15);
+			_coordx1 = _coordy1 = _coordx2 = _coordy2 = -1;
 			g2d.drawLine(linex1+(int)diameter1/2, liney1+(int)diameter1/2, linex2+(int)diameter1/2, liney2+(int)diameter1/2);
 		}
 		
@@ -107,6 +121,12 @@ public class DrawObject extends Canvas implements MouseListener{
 		paint(getGraphics());
 		_counter++;
 	}
+	
+	//methode Distanzberech g2d :
+	public double calculateDistanceBetweenPointsWithPoint2D(double x1, double y1, double x2, double y2) {
+
+    return Point2D.distance(x1, y1, x2, y2);
+}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
