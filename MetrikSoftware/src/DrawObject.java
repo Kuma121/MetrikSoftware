@@ -8,8 +8,15 @@ public class DrawObject extends Canvas implements MouseListener{
 	private Float _x, _y;
 	private int _sizeX = 0;
 	private int _sizeY = 0;
+	private int linex, liney;
 	private int _counter;
+	
 	private String text = "Koordinaten";
+	private int linex1 = -1;
+	private int liney1 = -1;
+	private int linex2 = -1;
+	private int liney2 = -1;
+	
 	private String diameter;
 	
 	
@@ -59,6 +66,18 @@ public class DrawObject extends Canvas implements MouseListener{
 		g2d.draw(ellipse2D);
 //		rec.draw(rectangle2D);
 		
+		
+		//Linienzeichnung auf Mittelpunkt setzen nach zweitem gemalten Objekt
+		if (_counter == 0) {
+			linex1 = linex;
+			liney1 = liney;
+		}
+		else if (_counter == 1) {
+			linex2 = linex;
+			liney2 = liney;
+			g2d.drawLine(linex1+(int)diameter1/2, liney1+(int)diameter1/2, linex2+(int)diameter1/2, liney2+(int)diameter1/2);
+		}
+		
 		//Koordinatenposition
 		if(_y < 20) {
 			g2d.drawString(text, _x-20, _y+65);
@@ -79,7 +98,9 @@ public class DrawObject extends Canvas implements MouseListener{
 	//wenn Maus geklickt wird
 	public void mouseClicked(MouseEvent e) {
 		_x = (float) e.getX();
+		linex = e.getX();
 		_y = (float) e.getY();
+		liney = e.getY();
 		text = "Koordinaten: x: "+_x+" y: "+_y;
 		
 		//male etwas
