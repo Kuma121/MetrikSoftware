@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 public class DrawObject extends Canvas implements MouseListener{
 	
@@ -34,13 +35,19 @@ public class DrawObject extends Canvas implements MouseListener{
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setStroke(new BasicStroke(3.0F));
 		
-		Ellipse2D ellipse2D = new Ellipse2D.Float(_x, _y, 50, 50);
+		Graphics2D rec = (Graphics2D) g;
+		rec.setStroke(new BasicStroke(3.0F));
 		
-		g2d.draw(ellipse2D);
+		Ellipse2D ellipse2D = new Ellipse2D.Float(_x, _y, 50, 50);
+		Rectangle2D rectangle2D = new Rectangle2D.Float(_x, _y, 50, 50);
+		
+//		g2d.draw(ellipse2D);
+		rec.draw(rectangle2D);
 		
 		//nach zwei Formen Canvas leeren
 		if(_counter > 1) {
 			g2d.clearRect(0, 0, _sizeX, _sizeY);
+			rec.clearRect(0, 0, _sizeX, _sizeY);
 			
 			_counter = -1;
 		}
